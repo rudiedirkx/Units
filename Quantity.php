@@ -70,6 +70,23 @@ abstract class Quantity {
 	}
 
 	/**
+	 * Advanded convertor, using unit-base-unit methods
+	 */
+	protected function convertUsingMethods( $toUnit ) {
+		$amount = $this->amount;
+
+		if ($this->unit != $this::BASE_UNIT) {
+			$amount = call_user_func(array($this, $this->unit . 'to' . $this::BASE_UNIT), $amount);
+		}
+
+		if ($this::BASE_UNIT != $toUnit) {
+			$amount = call_user_func(array($this, $this::BASE_UNIT . 'to' . $toUnit), $amount);
+		}
+
+		return $amount;
+	}
+
+	/**
 	 * Convert the object to another standard unit
 	 */
 	public function convertTo( $unit ) {
