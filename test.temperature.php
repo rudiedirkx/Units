@@ -1,7 +1,7 @@
 <?php
 
-require 'Quantity.php';
-require 'Temperature.php';
+require 'lib/Quantity.php';
+require 'lib/Temperature.php';
 
 use rdx\units\Temperature;
 

@@ -1,7 +1,7 @@
 <?php
 
-require 'Quantity.php';
-require 'Volume.php';
+require 'lib/Quantity.php';
+require 'lib/Volume.php';
 
 use rdx\units\Volume;
 

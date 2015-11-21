@@ -1,7 +1,7 @@
 <?php
 
-require 'Quantity.php';
-require 'Mileage.php';
+require 'lib/Quantity.php';
+require 'lib/Mileage.php';
 
 use rdx\units\Mileage;
 
