@@ -1,0 +1,18 @@
+{
+    "name": "rdx/units",
+    "description": "Convert between units",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rudie Dirkx",
+            "email": "github@hotblocks.nl"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "rdx\\units\\": "lib"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
