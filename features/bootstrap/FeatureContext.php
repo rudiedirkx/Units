@@ -101,7 +101,7 @@ class FeatureContext implements Context, SnippetAcceptingContext {
 			return $amount;
 		}
 
-		return number_format((float) $amount, 4);
+		return number_format((float) $amount, 4, '.', '');
 	}
 
 	/**

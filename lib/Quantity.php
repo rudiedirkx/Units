@@ -13,11 +13,23 @@ abstract class Quantity {
 	// static public $units = array();
 
 	/**
-	 *
+	 * Convert without the bother of an object
 	 */
 	static public function convert( $amount, $fromUnit, $toUnit ) {
 		$quantity = new static($amount, $fromUnit);
 		return $quantity->to($toUnit);
+	}
+
+	/**
+	 * Check if the given unit is valid for this quantity
+	 */
+	static public function validUnit( $unit ) {
+		$units = static::$units;
+		if ( isset($units[0]) ) {
+			return in_array($unit, $units);
+		}
+
+		return isset($units[$unit]);
 	}
 
 
@@ -30,6 +42,12 @@ abstract class Quantity {
 	 *
 	 */
 	public function __construct( $amount, $unit = null, $convertToDefault = true ) {
+		// Invalid unit!
+		if ( $unit && !static::validUnit($unit) ) {
+			$quantity = (new \ReflectionClass(get_called_class()))->getShortName();
+			throw new ConversionException("Can't import '$quantity' as '$unit'.");
+		}
+
 		$this->amount = $amount;
 		$this->unit = $unit ?: $this::$default_unit;
 
@@ -58,7 +76,8 @@ abstract class Quantity {
 	 * The default convertor, using the Quantity's conversion table
 	 */
 	protected function convertUsingTable( $toUnit ) {
-		if (!isset($this::$units[$toUnit])) {
+		// Invalid unit!
+		if ( !$this::validUnit($toUnit) ) {
 			$quantity = (new \ReflectionClass($this))->getShortName();
 			throw new ConversionException("Can't convert '$quantity' to '$toUnit'.");
 		}
@@ -82,11 +101,11 @@ abstract class Quantity {
 	protected function convertUsingMethods( $toUnit ) {
 		$amount = $this->amount;
 
-		if ($this->unit != $this::BASE_UNIT) {
+		if ( $this->unit != $this::BASE_UNIT ) {
 			$amount = call_user_func(array($this, $this->unit . 'to' . $this::BASE_UNIT), $amount);
 		}
 
-		if ($this::BASE_UNIT != $toUnit) {
+		if ( $this::BASE_UNIT != $toUnit ) {
 			$amount = call_user_func(array($this, $this::BASE_UNIT . 'to' . $toUnit), $amount);
 		}
 
@@ -102,12 +121,12 @@ abstract class Quantity {
 	}
 
 	/**
-	 * Return this quantity in all known units.
+	 * Return this quantity in all known units
 	 */
 	public function all() {
 		$all = array();
-		foreach ($this::$units as $unit => $conversion) {
-			if (is_int($unit)) {
+		foreach ( $this::$units as $unit => $conversion ) {
+			if ( is_int($unit) ) {
 				$unit = $conversion;
 			}
 
