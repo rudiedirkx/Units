@@ -14,5 +14,8 @@
         }
     },
     "minimum-stability": "dev",
-    "require": {}
+    "require": {},
+    "require-dev": {
+        "behat/behat": "^3.0"
+    }
 }
