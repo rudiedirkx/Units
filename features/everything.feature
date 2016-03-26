@@ -20,7 +20,7 @@ Feature: All quantities and units
 			| Quantity    | StartAmount | StartUnit | ResultAmount | ResultUnit |
 
 			# Volume
-			| Volume      |  1          | l         |    1         | l          |
+			| Volume      |    1        | l         |    1         | l          |
 			| Volume      |  350        | usg       | 1324.8935    | l          |
 			| Volume      | 1000        | l         |  264.1722    | usg        |
 			| Volume      | 1000        | l         |  219.9692    | bg         |
