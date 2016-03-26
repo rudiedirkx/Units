@@ -19,6 +19,6 @@ Feature: Volume
 
 	Scenario: In every unit
 		Then I should have all:
-			| l   | 15     |
-			| usg | 3.9626 |
-			| bg  | 3.2995 |
+			| l   | 15      |
+			| usg |  3.9626 |
+			| bg  |  3.2995 |
