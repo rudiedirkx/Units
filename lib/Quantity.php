@@ -86,11 +86,11 @@ abstract class Quantity {
 
 		// First convert from `$this->unit` to `BASE_UNIT`
 		$factor = $this::$units[$this->unit];
-		$amount = $factor < 0 ? abs($factor) / $amount : $amount * $factor;
+		$amount = $factor < 0 ? -$factor / $amount : $amount * $factor;
 
 		// Then convert from `BASE_UNIT` to `$toUnit`
 		$factor = $this::$units[$toUnit];
-		$amount = $factor < 0 ? $factor * $amount : $amount / abs($factor);
+		$amount = $factor < 0 ? -$factor / $amount : $amount / $factor;
 
 		return $amount;
 	}

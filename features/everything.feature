@@ -33,4 +33,4 @@ Feature: All quantities and units
 			| Mileage     |   25        | kmpl      |   58.8036    | mpusg      |
 			| Mileage     |   25        | kmpl      |   70.6205    | mpbg       |
 			| Mileage     |   50        | mpusg     |   60.0477    | mpbg       |
-			| Mileage     |   50        | mpusg     |    4.7042    | lp100km    |
+			| Mileage     |   50        | mpusg     |    4.7043    | lp100km    |
