@@ -6,11 +6,6 @@ use Behat\Gherkin\Node\TableNode;
 
 require 'vendor/autoload.php';
 
-//
-// Padding to make Feature line 1 = Line 11
-//
-//
-
 $feature = <<<FEATURE
 Feature: All quantities and units
 	Test all metadata and conversions between all units in all quantities
