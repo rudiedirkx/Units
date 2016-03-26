@@ -90,14 +90,24 @@ abstract class Quantity {
 	 * Convert the object to another standard unit
 	 */
 	public function convertTo( $unit ) {
-
+		$this->amount = $this->to($unit);
+		$this->unit = $unit;
 	}
 
 	/**
 	 * Return this quantity in all known units.
 	 */
 	public function all() {
+		$all = array();
+		foreach ($this::$units as $unit => $conversion) {
+			if (is_int($unit)) {
+				$unit = $conversion;
+			}
 
+			$all[$unit] = $this->to($unit);
+		}
+
+		return $all;
 	}
 
 }

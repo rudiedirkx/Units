@@ -12,6 +12,8 @@ class Temperature extends Quantity {
 	// New objects will convert to this unit
 	static public $default_unit = self::BASE_UNIT;
 
+	static public $units = array('k', 'c', 'f');
+
 	/**
 	 *
 	 */
