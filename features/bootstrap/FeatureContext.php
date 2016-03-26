@@ -26,7 +26,7 @@ class FeatureContext implements Context, SnippetAcceptingContext {
 	 * @Given I start with :amount :unit of :quantity
 	 */
 	public function iStartWithAmountUnitOfQuantity($amount, $unit, $quantity) {
-		$class = 'rdx\units\\' . $quantity;
+		$class = $this->getClass($quantity);
 		$this->quantity = new $class($amount, $unit);
 	}
 
@@ -56,40 +56,25 @@ class FeatureContext implements Context, SnippetAcceptingContext {
 	}
 
 	/**
-	 * @Then I should have all:
+	 * @Then I should have :number :quantity units
 	 */
-	public function iShouldHaveAll(TableNode $target) {
-		$target = $target->getRowsHash();
-		$result = $this->quantity->all();
-		$this->assertTables($target, $result, array_keys($target));
+	public function iShouldHaveUnits($number, $quantity) {
+		$class = $this->getClass($quantity);
+		$units = $class::$units;
+
+		if (count($units) != $number) {
+			$units = count($units);
+			throw new \Exception("'$quantity' should have $number units, but has $units");
+		}
 	}
 
 
 
 	/**
-	 * Compare 2 tables. Must be identical (after unification) to pass.
 	 *
-	 * @todo Better error highlighting: show only failed rows in red, don't repeat table.
 	 */
-	protected function assertTables($target, $result, array $order) {
-		$target = $this->unifyTable($target);
-		$result = $this->unifyTable($result);
-
-		if ($result != $target) {
-			$table = array();
-			foreach ($order as $unit) {
-				if (isset($result[$unit])) {
-					$table[] = array($unit, $result[$unit]);
-					unset($result[$unit]);
-				}
-			}
-			foreach ($result as $unit => $amount) {
-				$table[] = array($unit, $amount);
-			}
-
-			$table = new TableNode($table);
-			throw new \Exception("Result table is wrong:\n$table");
-		}
+	protected function getClass($quantity) {
+		return 'rdx\units\\' . $quantity;
 	}
 
 	/**
@@ -99,7 +84,11 @@ class FeatureContext implements Context, SnippetAcceptingContext {
 		$target = $this->round($target);
 		$result = $this->round($result);
 
-		if ($result != $target) {
+		if ($result !== $target) {
+			if ($result === false) {
+				$result = '<invalid>';
+			}
+
 			throw new \Exception("Result should be $target, but is $result");
 		}
 	}
@@ -108,7 +97,11 @@ class FeatureContext implements Context, SnippetAcceptingContext {
 	 * Unify a single number.
 	 */
 	protected function round($amount) {
-		return number_format($amount, 4);
+		if ($amount === false) {
+			return $amount;
+		}
+
+		return number_format((float) $amount, 4);
 	}
 
 	/**

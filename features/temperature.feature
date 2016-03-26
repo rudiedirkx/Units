@@ -17,9 +17,17 @@ Feature: Temperature
 		Given I start with "32" "f" of "Temperature"
 		Then I should have "0" "c"
 
-	Scenario: In every unit
+	Scenario: Number of units
+		# UPDATE THE TABLE BELOW IF YOU UPDATE THIS NUMBER
+		Then I should have "3" "Temperature" units
+		# UPDATE THE TABLE BELOW IF YOU UPDATE THIS NUMBER
+
+	Scenario Outline: In every unit
 		Given I start with "80" "f" of "Temperature"
-		Then I should have all:
-			| f |  80      |
-			| c |  26.6667 |
-			| k | 299.8167 |
+		Then I should have <Result> <Unit>
+
+		Examples:
+			| Unit | Result   |
+			| f    |  80      |
+			| c    |  26.6667 |
+			| k    | 299.8167 |

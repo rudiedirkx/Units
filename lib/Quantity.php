@@ -2,6 +2,8 @@
 
 namespace rdx\units;
 
+use rdx\units\exceptions\ConversionException;
+
 abstract class Quantity {
 
 	// The sub class must set these, since every Quantity has different units
@@ -56,6 +58,11 @@ abstract class Quantity {
 	 * The default convertor, using the Quantity's conversion table
 	 */
 	protected function convertUsingTable( $toUnit ) {
+		if (!isset($this::$units[$toUnit])) {
+			$quantity = (new \ReflectionClass($this))->getShortName();
+			throw new ConversionException("Can't convert '$quantity' to '$toUnit'.");
+		}
+
 		$amount = $this->amount;
 
 		// First convert from `$this->unit` to `BASE_UNIT`

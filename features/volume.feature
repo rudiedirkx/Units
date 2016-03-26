@@ -17,8 +17,17 @@ Feature: Volume
 	Scenario: Convert directly
 		Then I should have "3.9626" "usg"
 
-	Scenario: In every unit
-		Then I should have all:
-			| l   | 15      |
-			| usg |  3.9626 |
-			| bg  |  3.2995 |
+	Scenario: Number of units
+		# UPDATE THE TABLE BELOW IF YOU UPDATE THIS NUMBER
+		Then I should have "3" "Volume" units
+		# UPDATE THE TABLE BELOW IF YOU UPDATE THIS NUMBER
+
+	Scenario Outline: In every unit
+		Given I start with "15" "l" of "Volume"
+		Then I should have <Result> <Unit>
+
+		Examples:
+			| Unit | Result  |
+			| l    | 15      |
+			| usg  |  3.9626 |
+			| bg   |  3.2995 |
