@@ -34,3 +34,10 @@ Feature: All quantities and units
 			| Mileage     |   25        | kmpl      |   70.6205    | mpbg       |
 			| Mileage     |   50        | mpusg     |   60.0477    | mpbg       |
 			| Mileage     |   50        | mpusg     |    4.7043    | lp100km    |
+
+			# Temperature
+			| Temperature |  300        | k         |   26.8500    | c          |
+			| Temperature |    0        | k         | -459.6700    | f          |
+			| Temperature |   20        | c         |   68         | f          |
+			| Temperature |   80        | f         |  299.8167    | k          |
+			| Temperature |  100        | f         |   37.7778    | c          |
