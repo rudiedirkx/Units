@@ -9,6 +9,7 @@ Feature: All quantities and units
 			| Mileage     | 4      |
 			| Temperature | 3      |
 			| Volume      | 3      |
+			| Time        | 6      |
 
 	Scenario Outline: All kinds of conversions
 		Given I start with <StartAmount> <StartUnit> of <Quantity>
@@ -18,6 +19,12 @@ Feature: All quantities and units
 
 		Examples:
 			| Quantity    | StartAmount | StartUnit | ResultAmount | ResultUnit |
+
+			| Time        |    1        | s         |   1000       | ms         |
+			| Time        |    2        | d         | 172800       | s          |
+			| Time        |   12        | h         |      0.5     | d          |
+			| Time        |   10        | m         |    600       | s          |
+			| Time        | 1000        | m         |      0.6944  | d          |
 
 			# Volume
 			| Volume      |    1        | l         |    1         | l          |
