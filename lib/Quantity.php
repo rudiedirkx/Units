@@ -64,6 +64,10 @@ abstract class Quantity {
 	 * Convert object amount to another unit, and return, don't save
 	 */
 	public function to( $toUnit ) {
+		if ( $toUnit === 'base' ) {
+			$toUnit = static::BASE_UNIT;
+		}
+
 		return $this->convertor($toUnit);
 	}
 
