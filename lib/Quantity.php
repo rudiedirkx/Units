@@ -23,12 +23,16 @@ abstract class Quantity {
 	/**
 	 * Check if the given unit is valid for this quantity
 	 */
-	static public function validUnit( $unit ) {
+	static public function validUnit( &$unit ) {
+		if ( $unit === 'base' ) {
+			$unit = static::BASE_UNIT;
+			return true;
+		}
+
 		$units = static::$units;
 		if ( isset($units[0]) ) {
 			return in_array($unit, $units);
 		}
-
 		return isset($units[$unit]);
 	}
 
@@ -64,8 +68,10 @@ abstract class Quantity {
 	 * Convert object amount to another unit, and return, don't save
 	 */
 	public function to( $toUnit ) {
-		if ( $toUnit === 'base' ) {
-			$toUnit = static::BASE_UNIT;
+		// Invalid unit!
+		if ( !static::validUnit($toUnit) ) {
+			$quantity = (new \ReflectionClass(get_called_class()))->getShortName();
+			throw new ConversionException("Can't import '$quantity' as '$toUnit'.");
 		}
 
 		return $this->convertor($toUnit);
