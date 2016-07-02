@@ -21,7 +21,17 @@ abstract class Quantity {
 	}
 
 	/**
-	 * Check if the given unit is valid for this quantity
+	 * Throw a ConversionException if the given unit isn't valid for the called class
+	 */
+	static public function validateUnit( &$unit ) {
+		if ( !static::validUnit($unit) ) {
+			$quantity = (new \ReflectionClass(get_called_class()))->getShortName();
+			throw new ConversionException("Can't import '$quantity' as '$unit'.");
+		}
+	}
+
+	/**
+	 * Check if the given unit is valid for the called class
 	 */
 	static public function validUnit( &$unit ) {
 		if ( $unit === 'base' ) {
@@ -47,9 +57,8 @@ abstract class Quantity {
 	 */
 	public function __construct( $amount, $unit = null, $convertToDefault = true ) {
 		// Invalid unit!
-		if ( $unit && !static::validUnit($unit) ) {
-			$quantity = (new \ReflectionClass(get_called_class()))->getShortName();
-			throw new ConversionException("Can't import '$quantity' as '$unit'.");
+		if ( $unit ) {
+			static::validateUnit($unit);
 		}
 
 		$this->amount = $amount;
@@ -68,11 +77,7 @@ abstract class Quantity {
 	 * Convert object amount to another unit, and return, don't save
 	 */
 	public function to( $toUnit ) {
-		// Invalid unit!
-		if ( !static::validUnit($toUnit) ) {
-			$quantity = (new \ReflectionClass(get_called_class()))->getShortName();
-			throw new ConversionException("Can't import '$quantity' as '$toUnit'.");
-		}
+		static::validateUnit($toUnit);
 
 		return $this->convertor($toUnit);
 	}
@@ -86,11 +91,7 @@ abstract class Quantity {
 	 * The default convertor, using the Quantity's conversion table
 	 */
 	protected function convertUsingTable( $toUnit ) {
-		// Invalid unit!
-		if ( !$this::validUnit($toUnit) ) {
-			$quantity = (new \ReflectionClass($this))->getShortName();
-			throw new ConversionException("Can't convert '$quantity' to '$toUnit'.");
-		}
+		$this::validateUnit($toUnit);
 
 		$amount = $this->amount;
 
