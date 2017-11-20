@@ -13,7 +13,6 @@
             "rdx\\units\\": "lib"
         }
     },
-    "minimum-stability": "dev",
     "require-dev": {
         "behat/behat": "^3.0"
     }
