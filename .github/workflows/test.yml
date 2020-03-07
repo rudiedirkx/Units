@@ -11,6 +11,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Composer install
-        run: composer install
+        run: composer install --no-suggest --no-progress --no-interaction
       - name: Run behat
         run: vendor/bin/behat --format-settings='{"paths":false}'
