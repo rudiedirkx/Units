@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Copy privkey
-      run: composer install
-    - name: Deploy to hoblox
-      run: vendor/bin/behat --format-settings='{"paths":false}'
+      - name: See fs
+        run: ls -lAhR
+      - name: Copy privkey
+        run: composer install
+      - name: Deploy to hoblox
+        run: vendor/bin/behat --format-settings='{"paths":false}'
