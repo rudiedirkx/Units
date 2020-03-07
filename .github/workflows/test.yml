@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: See fs
-        run: ls -lAhR
-      - name: Copy privkey
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Composer install
         run: composer install
-      - name: Deploy to hoblox
+      - name: Run behat
         run: vendor/bin/behat --format-settings='{"paths":false}'
