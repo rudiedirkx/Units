@@ -1,0 +1,14 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Copy privkey
+      run: composer install
+    - name: Deploy to hoblox
+      run: vendor/bin/behat --format-settings='{"paths":false}'
